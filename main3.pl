@@ -13,7 +13,7 @@ open_kb(Route,KB):-
 
 save_kb(Route,KB):-
 	open(Route,write,Stream),
-	write(Stream,KB),
+	write(Stream, Term),
 	close(Stream).
 
 readclauses(InStream,W) :-
@@ -36,20 +36,36 @@ atom_to_term(ATOM, TERM) :-
 	append(STR,PTO,STR_PTO),
 	read_from_chars(STR_PTO,TERM).
 
-:- op(800,xfx,'=>').
+
+/* Creación de predicados para eliminar 
+
+a) Clases objectos
+b) Propiedades específicas
+c) Relaciones específicas
+*/
+
+/*
+a) Eliminación Clases u objetos cuyo nombre 
+será rm_class y rm_object, respectivamente. 
+Ambos predicados recibirán tres argumentos: 
+(i) el nombre de la clase u objeto a eliminar, 
+(ii) la base de conocimientos actual,
+(iii) la nueva base de conocimientos donde 
+se refleja la eliminación.
+*/
 
 
+/*rm_class(Class,KB,NewKB):-
+    delete(class(Class,UClass,_,_,_),KB).
 
-%------------------------------
-% Ejemplo:  
-%------------------------------
+rm_object_property(Class,KB,NewKB):-
 
-%Cargar la base en una lista, imprimir la lista en consola y guardar todo en un nuevo archivo.
-%No olvides poner las rutas correctas para localizar el archivo kb.txt en tu computadora!!!
+rm_object_relation(Class,KB,NewKB):-*/
 
-ejemplo:-
-	open_kb('./kb.txt',KB),
-	write('KB: '),
-	write(KB),
-	save_kb('./new_kb.txt',KB).
+/*Rerecusividad para eliminar */
 
+delete(_,[],[]).
+delete(X,[X|Y],Z):-
+    delete(X,Y,Z).
+delete(A,[B|C],[B|D]):-
+    delete(A,C,D).

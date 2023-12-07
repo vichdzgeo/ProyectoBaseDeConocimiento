@@ -5,25 +5,14 @@
 
 %KB open and save
 
-open_original_kb(KB):-
-	getenv('GOLEM_IIMAS_HOME',GOLEM_IIMAS_HOME),
-	atomic_concat(GOLEM_IIMAS_HOME,'/rosagents/SitLog/knowledge_base/golem_KB_original.txt',KBPATH),
+
+open_kb(KBPATH,KB):-
 	open(KBPATH,read,Stream),
 	readclauses(Stream,X),
 	close(Stream),
 	atom_to_term_conversion(X,KB).
 
-open_kb(KB):-
-	getenv('GOLEM_IIMAS_HOME',GOLEM_IIMAS_HOME),
-	atomic_concat(GOLEM_IIMAS_HOME,'/rosagents/SitLog/knowledge_base/golem_KB.txt',KBPATH),
-	open(KBPATH,read,Stream),
-	readclauses(Stream,X),
-	close(Stream),
-	atom_to_term_conversion(X,KB).
-
-save_kb(KB):-
-	getenv('GOLEM_IIMAS_HOME',GOLEM_IIMAS_HOME),
-	atomic_concat(GOLEM_IIMAS_HOME,'/rosagents/SitLog/knowledge_base/golem_KB.txt',KBPATH),
+save_kb(KBPATH,KB):-
 	open(KBPATH,write,Stream),
 	writeq(Stream,KB),
 	close(Stream).

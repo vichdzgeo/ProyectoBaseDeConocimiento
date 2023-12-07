@@ -53,7 +53,7 @@ Abrir y guardar base de conocimiento
 ----------------------------------*/
 
 open_kb(Route,KB):-
-	open(Route,read,Stream),
+	open(Route,read,Stream,[encoding('utf8')]),
 	readclauses(Stream,X),
 	close(Stream),
 	atom_to_term(X,KB).
